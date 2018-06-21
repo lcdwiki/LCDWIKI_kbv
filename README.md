@@ -1,5 +1,5 @@
 # LCDWIKI_kbv
-Driver for Arduino  with 8Bit &amp; 16Bit 8080 Databus
+Driver for Arduino with 8Bit&16Bit 8080 Databus.
 This is a library for the lcd display.
 This library support these lcd controller:
 ILI9325 
