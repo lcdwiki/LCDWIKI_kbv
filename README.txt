@@ -21,6 +21,7 @@ To download. click the DOWNLOADS button in the top right corner, rename the unco
 
 Place the LCDWIKI_KBV library folder your <arduinosketchfolder>/libraries/ folder. You may need to create the libraries subfolder if its your first library. Restart the IDE
 
-Also requires the LCDWIKI_GUI library for Arduino. https://github.com/lcdwiki/LCDWIKI_gui
+Also requires the LCDWIKI_GUI library for Arduino. 
+https://github.com/lcdwiki/LCDWIKI_gui
 
 
