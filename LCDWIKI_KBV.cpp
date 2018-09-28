@@ -54,6 +54,8 @@ lcd_info current_lcd_info[] =
 							 0x9595,240,320,
 							 0x9486,320,480,
 							 0x7735,128,160,
+							 0x9488,320,480,
+							 0x9481,320,480,
 						 };
 
 // Constructor for breakout board (configurable LCD control lines).
@@ -771,6 +773,46 @@ void LCDWIKI_KBV::Set_Rotation(uint8_t r)
 		}
 		writeCmdData8(MD, val);
 	}
+	else if((lcd_driver == ID_9486) || (lcd_driver == ID_9481))
+	{
+		uint8_t val;
+		switch (rotation) 
+		{
+		   	case 2:
+		     	val = ILI9341_MADCTL_MX | ILI9341_MADCTL_BGR; //0 degree 
+		     	break;
+		   	case 3:
+		     	val = ILI9341_MADCTL_MV | ILI9341_MADCTL_BGR ; //90 degree 
+		     	break;
+		 	case 0:
+		    	val = ILI9341_MADCTL_MY | ILI9341_MADCTL_ML |ILI9341_MADCTL_BGR; //180 degree 
+		    	break;
+		   	case 1:
+		     	val = ILI9341_MADCTL_MX | ILI9341_MADCTL_MY| ILI9341_MADCTL_ML | ILI9341_MADCTL_MV | ILI9341_MADCTL_BGR; //270 degree
+		     	break;
+		 }
+		 writeCmdData8(MD, val); 
+	}
+	else if(lcd_driver == ID_9488)
+	{
+		uint8_t val;
+		switch (rotation) 
+		{			
+			case 0:
+		     	val = ILI9341_MADCTL_MX | ILI9341_MADCTL_MY | ILI9341_MADCTL_BGR ; //0 degree 
+		     	break;
+		   	case 1:
+		     	val = ILI9341_MADCTL_MV | ILI9341_MADCTL_MY | ILI9341_MADCTL_BGR ; //90 degree 
+		     	break;
+		 	case 2:
+		    	val = ILI9341_MADCTL_ML | ILI9341_MADCTL_BGR; //180 degree 
+		    	break;
+		   	case 3:
+		     	val = ILI9341_MADCTL_MX | ILI9341_MADCTL_ML | ILI9341_MADCTL_MV | ILI9341_MADCTL_BGR; //270 degree
+		     	break;
+		 }
+		 writeCmdData8(MD, val); 
+	}
 	else
 	{
 		uint8_t val;
@@ -1096,6 +1138,57 @@ void LCDWIKI_KBV::start(uint16_t ID)
             	0x29, 0         //Display On
 			};
 			init_table8(ILI9486_regValues, sizeof(ILI9486_regValues));
+			break;
+		case 0x9488:
+			lcd_driver = ID_9488;
+			//WIDTH = 320,HEIGHT = 480;
+			//width = WIDTH, height = HEIGHT;
+			XC=ILI9341_COLADDRSET,YC=ILI9341_PAGEADDRSET,CC=ILI9341_MEMORYWRITE,RC=HX8357_RAMRD,SC1=0x33,SC2=0x37,MD=ILI9341_MADCTL,VL=0,R24BIT=1;
+			static const uint8_t ILI9488_regValues[] PROGMEM = 
+			{
+				0xF7, 4, 0xA9, 0x51, 0x2C, 0x82,
+				0xC0, 2, 0x11, 0x09,
+				0xC1, 1, 0x41,
+				0xC5, 3, 0x00, 0x0A, 0x80,
+				0xB1, 2, 0xB0, 0x11,
+				0xB4, 1, 0x02,
+				0xB6, 2, 0x02, 0x22,
+				0xB7, 1, 0xC6,
+				0xBE, 2, 0x00, 0x04,
+				0xE9, 1, 0x00,
+				0x36, 1, 0x08,
+				0x3A, 1, 0x55,
+				0xE0, 15, 0x00, 0x07, 0x10, 0x09, 0x17, 0x0B, 0x41, 0x89, 0x4B, 0x0A, 0x0C, 0x0E, 0x18, 0x1B, 0x0F,
+				0xE1, 15, 0x00, 0x17, 0x1A, 0x04, 0x0E, 0x06, 0x2F, 0x45, 0x43, 0x02, 0x0A, 0x09, 0x32, 0x36, 0x0F,
+				0x11, 0,
+				TFTLCD_DELAY8, 120,
+				0x29, 0
+			};
+			init_table8(ILI9488_regValues, sizeof(ILI9488_regValues));
+			break;
+		case 0x9481:
+			lcd_driver = ID_9481;
+			//WIDTH = 320,HEIGHT = 480;
+			//width = WIDTH, height = HEIGHT;
+			XC=ILI9341_COLADDRSET,YC=ILI9341_PAGEADDRSET,CC=ILI9341_MEMORYWRITE,RC=HX8357_RAMRD,SC1=0x33,SC2=0x37,MD=ILI9341_MADCTL,VL=0,R24BIT=0;
+			static const uint8_t ILI9481_regValues[] PROGMEM = 
+			{
+				0x11, 0,
+				TFTLCD_DELAY8, 20,
+				0xD0, 3, 0x07, 0x42, 0x18,
+				0xD1, 3, 0x00, 0x07, 0x10,
+				0xD2, 2, 0x01, 0x02,
+				0xC0, 5, 0x10, 0x3B, 0x00, 0x02, 0x11,
+				0xC5, 1, 0x03,
+				0xC8, 12, 0x00, 0x32, 0x36, 0x45, 0x06, 0x16, 0x37, 0x75, 0x77, 0x54, 0x0C, 0x00,
+				0x36, 1, 0x0A,
+				0x3A, 1, 0x55,
+				0x2A, 4, 0x00, 0x00, 0x01, 0x3F,
+				0x2B, 4, 0x00, 0x00, 0x01, 0xE0,
+				TFTLCD_DELAY8, 120,
+				0x29, 0
+			};
+			init_table8(ILI9481_regValues, sizeof(ILI9481_regValues));
 			break;
 		case 0x7735:
 			lcd_driver = ID_7735;

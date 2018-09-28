@@ -28,6 +28,8 @@
 #define ID_4535    4
 #define ID_9486    5
 #define ID_7735    6
+#define ID_9488    7
+#define ID_9481    8
 #define ID_UNKNOWN 0xFF
 
 //LCD controller chip mode identifiers
@@ -39,6 +41,8 @@
 #define HX8347I 5
 #define ILI9486 6
 #define ST7735S 7
+#define ILI9488 8
+#define ILI9481 9
 
 //if using the lcd breakout board,comment out this next line.
 //if using the lcd shield,leave the line enable: 

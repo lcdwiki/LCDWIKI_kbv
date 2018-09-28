@@ -46,6 +46,8 @@
 //LCDWIKI_KBV my_lcd(HX8347G,40,38,39,44,41); //model,cs,cd,wr,rd,reset
 //LCDWIKI_KBV my_lcd(HX8347I,40,38,39,44,41); //model,cs,cd,wr,rd,reset
 //LCDWIKI_KBV my_lcd(ILI9486,40,38,39,44,41); //model,cs,cd,wr,rd,reset
+//LCDWIKI_KBV mylcd(ILI9488,40,38,39,44,41); //model,cs,cd,wr,rd,reset
+//LCDWIKI_KBV mylcd(ILI9481,40,38,39,44,41); //model,cs,cd,wr,rd,reset
 //LCDWIKI_KBV my_lcd(ST7735S,40,38,39,44,41); //model,cs,cd,wr,rd,reset
 
 //if the IC model is not known and the modules is readable,you can use this constructed function
