@@ -582,6 +582,10 @@ uint16_t LCDWIKI_KBV::Read_ID(void)
 	{
 		return 0x9486;
 	}
+	else if(ret == 0x9488)
+	{
+		return 0x9488;
+	}
 	else
 	{
 		return Read_Reg(0, 0); //others
@@ -773,22 +777,43 @@ void LCDWIKI_KBV::Set_Rotation(uint8_t r)
 		}
 		writeCmdData8(MD, val);
 	}
-	else if((lcd_driver == ID_9486) || (lcd_driver == ID_9481))
+	else if(lcd_driver == ID_9481)
 	{
 		uint8_t val;
 		switch (rotation) 
 		{
-		   	case 2:
-		     	val = ILI9341_MADCTL_MX | ILI9341_MADCTL_BGR; //0 degree 
+		   	case 0:
+		     	val = 0x09; //0 degree PAO=0,CAO=0,P/CO=0,VO=0,RGBO=1,DO=0,HF=0,VF=1
 		     	break;
-		   	case 3:
-		     	val = ILI9341_MADCTL_MV | ILI9341_MADCTL_BGR ; //90 degree 
-		     	break;
-		 	case 0:
-		    	val = ILI9341_MADCTL_MY | ILI9341_MADCTL_ML |ILI9341_MADCTL_BGR; //180 degree 
-		    	break;
 		   	case 1:
-		     	val = ILI9341_MADCTL_MX | ILI9341_MADCTL_MY| ILI9341_MADCTL_ML | ILI9341_MADCTL_MV | ILI9341_MADCTL_BGR; //270 degree
+		     	val = 0x2B; //90 degree PAO=0,CAO=0,P/CO=1,VO=0,RGBO=1,DO=0,HF=1,VF=1
+		     	break;
+		 	case 2:
+		    	val = 0x0A; //180 degree PAO=0,CAO=0,P/CO=0,VO=0,RGBO=1,DO=0,HF=1,VF=0
+		    	break;
+		   	case 3:
+		     	val = 0x28; //270 degree PAO=0,CAO=0,P/CO=1,VO=0,RGBO=1,DO=0,HF=0,VF=0
+		     	break;
+		 }
+		 writeCmdData8(MD, val); 
+
+	}
+	else if(lcd_driver == ID_9486)
+	{
+		uint8_t val;
+		switch (rotation) 
+		{
+		   	case 0:
+		     	val = ILI9341_MADCTL_BGR; //0 degree 
+		     	break;
+		   	case 1:
+		     	val = ILI9341_MADCTL_MX | ILI9341_MADCTL_MV | ILI9341_MADCTL_ML | ILI9341_MADCTL_BGR ; //90 degree 
+		     	break;
+		 	case 2:
+		    	val = ILI9341_MADCTL_MY | ILI9341_MADCTL_MX |ILI9341_MADCTL_BGR; //180 degree 
+		    	break;
+		   	case 3:
+		     	val = ILI9341_MADCTL_MY | ILI9341_MADCTL_MV | ILI9341_MADCTL_BGR; //270 degree
 		     	break;
 		 }
 		 writeCmdData8(MD, val); 
@@ -1121,6 +1146,27 @@ void LCDWIKI_KBV::start(uint16_t ID)
 			XC=ILI9341_COLADDRSET,YC=ILI9341_PAGEADDRSET,CC=ILI9341_MEMORYWRITE,RC=HX8357_RAMRD,SC1=0x33,SC2=0x37,MD=ILI9341_MADCTL,VL=0,R24BIT=0;
 			static const uint8_t ILI9486_regValues[] PROGMEM = 
 			{
+				0xF9, 2, 0x00, 0x08,
+				0xC0, 2, 0x19, 0x1A,
+				0xC1, 2, 0x45, 0x00,
+				0xC2, 1, 0x33,
+				0xC5, 2, 0x00, 0x28,
+				0xB1, 2, 0x90, 0x11,
+				0xB4, 1, 0x02,
+				0xB6, 3, 0x00, 0x42, 0x3B,
+				0xB7, 1, 0x07,
+				0xE0, 15, 0x1F, 0x25, 0x22, 0x0B, 0x06, 0x0A, 0x4E, 0xC6, 0x39, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+				0xE1, 15, 0x1F, 0x3F, 0x3F, 0x0F, 0x1F, 0x0F, 0x46, 0x49, 0x31, 0x05, 0x09 ,0x03, 0x1C, 0x1A, 0x00,
+				0xF1, 8, 0x36, 0x04, 0x00, 0x3C, 0x0F, 0x0F, 0xA4, 0x02,
+				0xF2, 9, 0x18, 0xA3, 0x12, 0x02, 0x32, 0x12, 0xFF, 0x32, 0x00,
+				0xF4, 5, 0x40, 0x00, 0x08, 0x91, 0x04, 
+				0xF8, 2, 0x21, 0x04,
+				0x36, 1, 0x48,
+				0x3A, 1, 0x55,
+				0x11,0,
+				TFTLCD_DELAY8, 120,
+				0x29,0
+/*
 				0x01, 0,            //Soft Reset
             	TFTLCD_DELAY8, 150,  // .kbv will power up with ONLY reset, sleep out, display on
             	0x28, 0,            //Display Off
@@ -1136,6 +1182,7 @@ void LCDWIKI_KBV::start(uint16_t ID)
             	0x11, 0,            //Sleep Out
             	TFTLCD_DELAY8, 150,
             	0x29, 0         //Display On
+*/
 			};
 			init_table8(ILI9486_regValues, sizeof(ILI9486_regValues));
 			break;

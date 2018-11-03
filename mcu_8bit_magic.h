@@ -1,6 +1,8 @@
 #ifndef _mcu_8bit_magic_
 #define _mcu_8bit_magic_
 
+#include "lcd_mode.h"
+
 #define DELAY7        \
   asm volatile(       \
     "rjmp .+0" "\n\t" \
@@ -97,6 +99,7 @@
   #define setReadDir() { DDRH &= ~HMASK; DDRB &= ~BMASK; DDRG &= ~GMASK; }
 
  #else // Mega w/Breakout board
+ #ifndef USE_8BIT_SHIELD_ON_MEGA
   #define EMASK         0x38
   #define GMASK         0x20
   #define HMASK         0x78
@@ -118,6 +121,16 @@
 //  #define read16(dst) { uint8_t hi; read8(hi); read8(dst); dst |= (hi << 8); }
   #define setWriteDir() { DDRH |= HMASK;DDRE |= EMASK;DDRG |= GMASK; }
   #define setReadDir()  { DDRH &= ~HMASK;DDRE &= ~EMASK;DDRG &= ~(GMASK); }
+ #else
+  #define AMASK    0xFF
+  #define write8(d) {\
+		PORTA = d;WR_STROBE;}
+  #define read8(dst) {\
+  		RD_ACTIVE; DELAY7; \
+  		dst = PINA;RD_IDLE;}
+  #define setWriteDir() {DDRA |= AMASK;}
+  #define setReadDir()  {DDRA &= ~AMASK;}
+ #endif
 		
  #endif
 
