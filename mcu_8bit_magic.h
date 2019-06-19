@@ -122,14 +122,26 @@
   #define setWriteDir() { DDRH |= HMASK;DDRE |= EMASK;DDRG |= GMASK; }
   #define setReadDir()  { DDRH &= ~HMASK;DDRE &= ~EMASK;DDRG &= ~(GMASK); }
  #else
-  #define AMASK    0xFF
-  #define write8(d) {\
-		PORTA = d;WR_STROBE;}
-  #define read8(dst) {\
-  		RD_ACTIVE; DELAY7; \
-  		dst = PINA;RD_IDLE;}
-  #define setWriteDir() {DDRA |= AMASK;}
-  #define setReadDir()  {DDRA &= ~AMASK;}
+ 	#if USE_8BIT_SHIELD_ON_MEGA
+	#define AMASK	 0xFF
+	#define write8(d) {\
+		   	PORTA = d;WR_STROBE;}
+	#define read8(dst) {\
+		   	RD_ACTIVE; DELAY7; \
+		   	dst = PINA;RD_IDLE;}
+	#define setWriteDir() {DDRA |= AMASK;}
+	#define setReadDir()  {DDRA &= ~AMASK;}
+	#else
+	#define CMASK    0xFF
+  	#define write8(d) {\
+			PORTC = d;WR_STROBE;}
+  	#define read8(dst) {\
+  			RD_ACTIVE; DELAY7; \
+  			dst = PINC;RD_IDLE;}
+  	#define setWriteDir() {DDRC |= CMASK;}
+  	#define setReadDir()  {DDRC &= ~CMASK;}
+	#endif
+
  #endif
 		
  #endif

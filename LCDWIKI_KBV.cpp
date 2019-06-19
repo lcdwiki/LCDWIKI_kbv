@@ -56,6 +56,7 @@ lcd_info current_lcd_info[] =
 							 0x7735,128,160,
 							 0x9488,320,480,
 							 0x9481,320,480,
+							 0x7796,320,480,
 						 };
 
 // Constructor for breakout board (configurable LCD control lines).
@@ -278,17 +279,23 @@ void LCDWIKI_KBV::reset(void)
 
 void LCDWIKI_KBV::Write_Cmd(uint16_t cmd)
 {
+	CS_ACTIVE;
 	writeCmd16(cmd);
+	CS_IDLE;
 }
 
 void LCDWIKI_KBV::Write_Data(uint16_t data)
 {
+	CS_ACTIVE;
 	writeData16(data);
+	CS_IDLE;
 }
 
 void LCDWIKI_KBV::Write_Cmd_Data(uint16_t cmd, uint16_t data)
 {
+	CS_ACTIVE;
 	writeCmdData16(cmd,data);
+	CS_IDLE;
 }
 
 //Write a command and N datas
@@ -586,6 +593,10 @@ uint16_t LCDWIKI_KBV::Read_ID(void)
 	{
 		return 0x9488;
 	}
+	else if(ret == 0x7796)
+	{
+		return 0x7796;
+	}
 	else
 	{
 		return Read_Reg(0, 0); //others
@@ -804,16 +815,16 @@ void LCDWIKI_KBV::Set_Rotation(uint8_t r)
 		switch (rotation) 
 		{
 		   	case 0:
-		     	val = ILI9341_MADCTL_BGR; //0 degree 
+		     	val = ILI9341_MADCTL_MX | ILI9341_MADCTL_BGR; //0 degree 
 		     	break;
 		   	case 1:
-		     	val = ILI9341_MADCTL_MX | ILI9341_MADCTL_MV | ILI9341_MADCTL_ML | ILI9341_MADCTL_BGR ; //90 degree 
+		     	val = ILI9341_MADCTL_MV | ILI9341_MADCTL_ML | ILI9341_MADCTL_BGR ; //90 degree 
 		     	break;
 		 	case 2:
-		    	val = ILI9341_MADCTL_MY | ILI9341_MADCTL_MX |ILI9341_MADCTL_BGR; //180 degree 
+		    	val = ILI9341_MADCTL_MY |ILI9341_MADCTL_BGR; //180 degree 
 		    	break;
 		   	case 3:
-		     	val = ILI9341_MADCTL_MY | ILI9341_MADCTL_MV | ILI9341_MADCTL_BGR; //270 degree
+		     	val = ILI9341_MADCTL_MX | ILI9341_MADCTL_MY | ILI9341_MADCTL_MV | ILI9341_MADCTL_BGR; //270 degree
 		     	break;
 		 }
 		 writeCmdData8(MD, val); 
@@ -931,7 +942,7 @@ void LCDWIKI_KBV:: init_table16(const void *table, int16_t size)
         }
         else 
 		{
-			writeCmdData16(cmd, d);                      //static function
+			Write_Cmd_Data(cmd, d);                      //static function
         }
         size -= 2 * sizeof(int16_t);
     }
@@ -1146,24 +1157,19 @@ void LCDWIKI_KBV::start(uint16_t ID)
 			XC=ILI9341_COLADDRSET,YC=ILI9341_PAGEADDRSET,CC=ILI9341_MEMORYWRITE,RC=HX8357_RAMRD,SC1=0x33,SC2=0x37,MD=ILI9341_MADCTL,VL=0,R24BIT=0;
 			static const uint8_t ILI9486_regValues[] PROGMEM = 
 			{
-				0xF9, 2, 0x00, 0x08,
-				0xC0, 2, 0x19, 0x1A,
-				0xC1, 2, 0x45, 0x00,
-				0xC2, 1, 0x33,
-				0xC5, 2, 0x00, 0x28,
-				0xB1, 2, 0x90, 0x11,
-				0xB4, 1, 0x02,
-				0xB6, 3, 0x00, 0x42, 0x3B,
-				0xB7, 1, 0x07,
-				0xE0, 15, 0x1F, 0x25, 0x22, 0x0B, 0x06, 0x0A, 0x4E, 0xC6, 0x39, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-				0xE1, 15, 0x1F, 0x3F, 0x3F, 0x0F, 0x1F, 0x0F, 0x46, 0x49, 0x31, 0x05, 0x09 ,0x03, 0x1C, 0x1A, 0x00,
-				0xF1, 8, 0x36, 0x04, 0x00, 0x3C, 0x0F, 0x0F, 0xA4, 0x02,
-				0xF2, 9, 0x18, 0xA3, 0x12, 0x02, 0x32, 0x12, 0xFF, 0x32, 0x00,
-				0xF4, 5, 0x40, 0x00, 0x08, 0x91, 0x04, 
+				0xF1, 6, 0x36, 0x04, 0x00, 0x3C, 0x0F, 0x8F,
+				0xF2, 9, 0x18, 0xA3, 0x12, 0x02, 0xB2, 0x12, 0xFF, 0x10, 0x00, 
 				0xF8, 2, 0x21, 0x04,
-				0x36, 1, 0x48,
+				0xF9, 2, 0x00, 0x08,
+				0x36, 1, 0x08, 
+				0xB4, 1, 0x00,
+				0xC1, 1, 0x41,
+				0xC5, 4, 0x00, 0x91, 0x80, 0x00,
+				0xE0, 15, 0x0F, 0x1F, 0x1C, 0x0C, 0x0F, 0x08, 0x48, 0x98, 0x37, 0x0A, 0x13, 0x04, 0x11, 0x0D, 0x00,
+				0xE1, 15, 0x0F, 0x32, 0x2E, 0x0B, 0x0D, 0x05, 0x47, 0x75, 0x37, 0x06, 0x10 ,0x03, 0x24, 0x20, 0x00,				
 				0x3A, 1, 0x55,
 				0x11,0,
+				0x36, 1, 0x28,
 				TFTLCD_DELAY8, 120,
 				0x29,0
 /*
@@ -1264,6 +1270,39 @@ void LCDWIKI_KBV::start(uint16_t ID)
             	0x29, 0         //Display On
 			};
 			init_table8(ST7735S_regValues, sizeof(ST7735S_regValues));
+			break;
+		case 0x7796:
+			lcd_driver = ID_7796;
+			//WIDTH = 128,HEIGHT = 160;
+			//width = WIDTH, height = HEIGHT;
+			XC=ILI9341_COLADDRSET,YC=ILI9341_PAGEADDRSET,CC=ILI9341_MEMORYWRITE,RC=HX8357_RAMRD,SC1=0x33,SC2=0x37,MD=ILI9341_MADCTL,VL=0,R24BIT=0;
+			static const uint8_t ST7796S_regValues[] PROGMEM = 
+			{
+				0xF0, 1, 0xC3,           
+            	0xF0, 1, 0x96, 
+            	0x36, 1, 0x68, 
+            	0x3A, 1, 0x05, 
+            	0xB0, 1, 0x80,         
+            	0xB6, 2, 0x20, 0x02,
+            	0xB5, 4, 0x02, 0x03, 0x00, 0x04, 
+            	0xB1, 2, 0x80, 0x10,      
+            	0xB4, 1, 0x00, 
+            	0xB7, 1, 0xC6, 
+            	0xC5, 1, 0x24,
+                0xE4, 1, 0x31,
+                0xE8, 8, 0x40, 0x8A, 0x00, 0x00, 0x29, 0x19, 0xA5, 0x33,
+                0xC2, 0,
+                0xA7, 0,
+            	0xE0, 14,0xF0, 0x09, 0x13, 0x12, 0x12, 0x2B, 0x3C, 0x44, 0x4B, 0x1B, 0x18, 0x17, 0x1D, 0x21,
+            	0xE1, 14,0xF0, 0x09, 0x13, 0x0C, 0x0D, 0x27, 0x3B, 0x44, 0x4D, 0x0B, 0x17, 0x17, 0x1D, 0x21,
+            	0x36, 1, 0xEC,
+            	0xF0, 1, 0xC3, 
+            	0xF0, 1, 0x69,
+            	0x13, 0,
+            	0x11, 0,
+            	0x29, 0 
+			};
+			init_table8(ST7796S_regValues, sizeof(ST7796S_regValues));
 			break;
 		default:
 			lcd_driver = ID_UNKNOWN;
