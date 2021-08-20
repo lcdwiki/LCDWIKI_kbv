@@ -67,7 +67,7 @@ class LCDWIKI_KBV:public LCDWIKI_GUI
 	void Init_LCD(void);
 	void reset(void);
 	void start(uint16_t ID);
-	void Draw_Pixe(int16_t x, int16_t y, uint16_t color);
+	void Draw_Pixel(int16_t x, int16_t y, uint16_t color);
 	void Write_Cmd(uint16_t cmd);
 	void Write_Data(uint16_t data);
 	void Write_Cmd_Data(uint16_t cmd, uint16_t data);

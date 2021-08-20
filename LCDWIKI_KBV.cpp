@@ -604,7 +604,7 @@ uint16_t LCDWIKI_KBV::Read_ID(void)
 }
 
 //set x,y  coordinate and color to draw a pixel point 
-void LCDWIKI_KBV::Draw_Pixe(int16_t x, int16_t y, uint16_t color)
+void LCDWIKI_KBV::Draw_Pixel(int16_t x, int16_t y, uint16_t color)
 {
 	if((x < 0) || (y < 0) || (x > Get_Width()) || (y > Get_Height()))
 	{
