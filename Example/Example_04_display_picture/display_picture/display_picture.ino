@@ -53,7 +53,7 @@
 //LCDWIKI_KBV mylcd(240,320,40,38,39,44,41);//width,height,cs,cd,wr,rd,reset for
 //LCDWIKI_KBV mylcd(320,480,40,38,39,44,41);//width,height,cs,cd,wr,rd,reset
 
-//define some colour values
+//define some color values
 #define  BLACK   0x0000
 #define BLUE    0x001F
 #define RED     0xF800
@@ -79,21 +79,21 @@ void text_test()
   mylcd.Set_Text_Mode(0);
   
   mylcd.Fill_Screen(BLACK);  
-  mylcd.Set_Text_Back_colour(BLACK);
-  mylcd.Set_Text_colour(WHITE);
+  mylcd.Set_Text_Back_color(BLACK);
+  mylcd.Set_Text_color(WHITE);
   mylcd.Set_Text_Size(1);
   mylcd.Print_String("Hello World!", 0, 0);
   
-  mylcd.Set_Text_colour(YELLOW);
+  mylcd.Set_Text_color(YELLOW);
   mylcd.Set_Text_Size(2);
   mylcd.Print_Number_Float(1234.56,2,0, 8, '.', 0, ' ');
   
-  mylcd.Set_Text_colour(RED);
+  mylcd.Set_Text_color(RED);
   mylcd.Set_Text_Size(3);
   //mylcd.Print_String("DEADBEEF", 0, 24); 
   mylcd.Print_Number_Int(0xDEADBEF, 0, 24, 0, ' ', 16); 
 
-  mylcd.Set_Text_colour(GREEN);
+  mylcd.Set_Text_color(GREEN);
   mylcd.Set_Text_Size(5);  
   mylcd.Print_String("Groop", 0, 56); 
 

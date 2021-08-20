@@ -69,7 +69,7 @@ void color_dump(uint16_t x,uint16_t y)
     uint8_t hi = (my_lcd.Get_Display_Height() / 8) - 1;
     uint16_t pixel = 0;
     //set white
-    my_lcd.Set_Text_colour(WHITE);
+    my_lcd.Set_Text_color(WHITE);
     //set text size 1
     my_lcd.Set_Text_Size(1);
     for(int j = 0;j< hi;j++)
@@ -85,12 +85,12 @@ void color_dump(uint16_t x,uint16_t y)
         // if white set green
           if(WHITE == pixel)
           {
-             my_lcd.Set_Text_colour(GREEN); 
+             my_lcd.Set_Text_color(GREEN); 
            }
            sprintf(pbuf,"%04X ",pixel); 
            my_lcd.Print_String(pbuf,(strlen(buf)+strlen(pbuf)*i)*6*my_lcd.Get_Text_Size(),8*(j+1)*my_lcd.Get_Text_Size());
         //set white
-           my_lcd.Set_Text_colour(WHITE);
+           my_lcd.Set_Text_color(WHITE);
         } 
      }
 }   
@@ -102,7 +102,7 @@ uint16_t colors[] = {BLACK, BLUE};
 void setup()
 {
   my_lcd.Init_LCD();
-//my_lcd.Set_Text_Back_colour(BLACK);
+//my_lcd.Set_Text_Back_color(BLACK);
 }
 
 void loop() 
@@ -117,8 +117,8 @@ void loop()
     {
         color = colors[iter];
         my_lcd.Fill_Screen(color);
-        my_lcd.Set_Text_Back_colour(color);
-        my_lcd.Set_Text_colour(WHITE);
+        my_lcd.Set_Text_Back_color(color);
+        my_lcd.Set_Text_color(WHITE);
         my_lcd.Set_Text_Size(1);
      sprintf(buf, " ID=0x%04X Background=%04X %s", my_lcd.Read_ID(), color, aspectname[aspect]);
       my_lcd.Print_String(buf,0,0);

@@ -155,8 +155,8 @@ void setup()
    
     if (!SD.begin(10)) 
     {
-      my_lcd.Set_Text_Back_colour(BLUE);
-      my_lcd.Set_Text_colour(WHITE);    
+      my_lcd.Set_Text_Back_color(BLUE);
+      my_lcd.Set_Text_color(WHITE);    
       my_lcd.Set_Text_Size(1);
       my_lcd.Print_String("SD Card Init fail!",0,0);
     }
@@ -171,16 +171,16 @@ void loop()
        bmp_file = SD.open(file_name[i]);
        if(!bmp_file)
        {
-            my_lcd.Set_Text_Back_colour(BLUE);
-            my_lcd.Set_Text_colour(WHITE);    
+            my_lcd.Set_Text_Back_color(BLUE);
+            my_lcd.Set_Text_color(WHITE);    
             my_lcd.Set_Text_Size(1);
             my_lcd.Print_String("didnt find BMPimage!",0,10);
             while(1);
         }
         if(!analysis_bpm_header(bmp_file))
         {  
-            my_lcd.Set_Text_Back_colour(BLUE);
-            my_lcd.Set_Text_colour(WHITE);    
+            my_lcd.Set_Text_Back_color(BLUE);
+            my_lcd.Set_Text_color(WHITE);    
             my_lcd.Set_Text_Size(1);
             my_lcd.Print_String("bad bmp picture!",0,0);
             return;

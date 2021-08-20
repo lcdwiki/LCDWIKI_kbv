@@ -60,14 +60,14 @@ unsigned long show_text(void)
     unsigned long time_start = micros();
     my_lcd.Set_Draw_color(32, 0,255);
     my_lcd.Fill_Rectangle(0, 0, my_lcd.Get_Display_Width()-1, 14);
-    my_lcd.Set_Text_colour(0, 255, 0);   
+    my_lcd.Set_Text_color(0, 255, 0);   
     my_lcd.Set_Text_Size(1);
     my_lcd.Set_Text_Mode(1);
     my_lcd.Print_String("* Universal Color TFT Display Library *", CENTER, 3);
 
     my_lcd.Set_Draw_color(128, 128, 128);
     my_lcd.Fill_Rectangle(0, my_lcd.Get_Display_Height()-15, my_lcd.Get_Display_Width()-1, my_lcd.Get_Display_Height()-1);
-    my_lcd.Set_Text_colour(255, 255, 255);   
+    my_lcd.Set_Text_color(255, 255, 255);   
     my_lcd.Set_Text_Size(1);
     my_lcd.Set_Text_Mode(1);
     my_lcd.Print_String("<http://abcdefghijklmnopq.1234567890.com>", CENTER, my_lcd.Get_Display_Height()-11);
@@ -98,8 +98,8 @@ unsigned long show_triangle_function(void)
      }
      
      // Draw sin lines
-     my_lcd.Set_Text_colour(0, 255, 255);
-     my_lcd.Set_Text_Back_colour(0,0,0);   
+     my_lcd.Set_Text_color(0, 255, 255);
+     my_lcd.Set_Text_Back_color(0,0,0);   
      my_lcd.Set_Text_Size(1);
      my_lcd.Set_Text_Mode(0);
      my_lcd.Print_String("sin",5,17);
@@ -110,8 +110,8 @@ unsigned long show_triangle_function(void)
      }
 
      // Draw cos lines
-     my_lcd.Set_Text_colour(0, 255, 0);
-     my_lcd.Set_Text_Back_colour(0,0,0);   
+     my_lcd.Set_Text_color(0, 255, 0);
+     my_lcd.Set_Text_Back_color(0,0,0);   
      my_lcd.Set_Text_Size(1);
      my_lcd.Set_Text_Mode(0);
      my_lcd.Print_String("cos",5,25);
@@ -122,8 +122,8 @@ unsigned long show_triangle_function(void)
      }
 
      // Draw tan lines
-     my_lcd.Set_Text_colour(255, 255, 0); 
-     my_lcd.Set_Text_Back_colour(0,0,0);  
+     my_lcd.Set_Text_color(255, 255, 0); 
+     my_lcd.Set_Text_Back_color(0,0,0);  
      my_lcd.Set_Text_Size(1);
      my_lcd.Set_Text_Mode(0);
      my_lcd.Print_String("tan",5,33);
@@ -134,8 +134,8 @@ unsigned long show_triangle_function(void)
      }
 
      // Draw cot lines
-     my_lcd.Set_Text_colour(255, 0, 0); 
-     my_lcd.Set_Text_Back_colour(0,0,0);  
+     my_lcd.Set_Text_color(255, 0, 0); 
+     my_lcd.Set_Text_Back_color(0,0,0);  
      my_lcd.Set_Text_Size(1);
      my_lcd.Set_Text_Mode(0);
      my_lcd.Print_String("cot",5,41);
@@ -533,11 +533,11 @@ unsigned long show_total_time(void)
      }
      for(i = 0;i<15; i++)
      {
-         my_lcd.Set_Text_colour(255, 165, 0);   
+         my_lcd.Set_Text_color(255, 165, 0);   
          my_lcd.Set_Text_Size(1);
          my_lcd.Set_Text_Mode(1);
          my_lcd.Print_String(show_str[i], (my_lcd.Get_Display_Width()-260)/2-1, (my_lcd.Get_Display_Height()-150)/2+i*10-1);
-         my_lcd.Set_Text_colour(0, 255, 0); 
+         my_lcd.Set_Text_color(0, 255, 0); 
          my_lcd.Print_Number_Int(buf[i], (my_lcd.Get_Display_Width()-260)/2-1+200, (my_lcd.Get_Display_Height()-150)/2+i*10-1, 0, ' ', 10);
      }
      delay(5000);
@@ -550,7 +550,7 @@ void show_end(unsigned long run_time)
     my_lcd.Fill_Screen(0, 255, 255);
     my_lcd.Set_Draw_color(255, 0, 0);
     my_lcd.Fill_Round_Rectangle(my_lcd.Get_Display_Width()/2-1-120+1, my_lcd.Get_Display_Height()/2-1-60+1, my_lcd.Get_Display_Width()/2-1+120-1, my_lcd.Get_Display_Height()/2-1+60-1,5);
-    my_lcd.Set_Text_colour(0, 255, 255);   
+    my_lcd.Set_Text_color(0, 255, 255);   
     my_lcd.Set_Text_Size(1);
     my_lcd.Set_Text_Mode(1);
     my_lcd.Print_String("Running over!", CENTER, my_lcd.Get_Display_Height()/2-1-40);
@@ -558,9 +558,9 @@ void show_end(unsigned long run_time)
     my_lcd.Print_String("After a few seconds,", CENTER, my_lcd.Get_Display_Height()/2-1-20);
     my_lcd.Print_String("it will restart.", CENTER, my_lcd.Get_Display_Height()/2-1-10);
     my_lcd.Print_String("Please wait ...", CENTER, my_lcd.Get_Display_Height()/2-1);
-    my_lcd.Set_Text_colour(255, 255, 0); 
+    my_lcd.Set_Text_color(255, 255, 0); 
     my_lcd.Print_String("Total runtime(us):  ", my_lcd.Get_Display_Width()/2-1-90, my_lcd.Get_Display_Height()/2-1+40);
-    my_lcd.Set_Text_colour(0, 255, 0);
+    my_lcd.Set_Text_color(0, 255, 0);
     my_lcd.Print_Number_Int(run_time, my_lcd.Get_Display_Width()/2-1+30, my_lcd.Get_Display_Height()/2-1+40, 0, ' ', 10);  
     delay(10000);   
 }

@@ -305,8 +305,8 @@ void show_string(uint8_t *str,int16_t x,int16_t y,uint8_t csize,uint16_t fc, uin
 {
     my_lcd.Set_Text_Mode(mode);
     my_lcd.Set_Text_Size(csize);
-    my_lcd.Set_Text_colour(fc);
-    my_lcd.Set_Text_Back_colour(bc);
+    my_lcd.Set_Text_color(fc);
+    my_lcd.Set_Text_Back_color(bc);
     my_lcd.Print_String(str,x,y);
 }
  
@@ -330,7 +330,7 @@ void color_test()
 void text_test(void)
 {
     show_string("Hello World!",0,0,1,RED, BLACK,0);
-    my_lcd.Set_Text_colour(YELLOW);
+    my_lcd.Set_Text_color(YELLOW);
     my_lcd.Set_Text_Size(2);
     my_lcd.Print_Number_Float(01234.56789, 4, 0, 8, '.', 0, ' '); 
     show_string("ABCDEF123456",0,24,3,BLUE, BLACK,0);

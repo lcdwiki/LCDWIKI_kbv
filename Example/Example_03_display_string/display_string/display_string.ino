@@ -52,7 +52,7 @@
 //LCDWIKI_KBV mylcd(240,320,40,38,39,44,41);//width,height,cs,cd,wr,rd,reset for
 //LCDWIKI_KBV mylcd(320,480,40,38,39,44,41);//width,height,cs,cd,wr,rd,reset
 
-//define some colour values
+//define some color values
 #define  BLACK   0x0000
 #define BLUE    0x001F
 #define RED     0xF800
@@ -73,8 +73,8 @@ void loop()
   mylcd.Set_Text_Mode(0);
   //display 1 times string
   mylcd.Fill_Screen(0x0000);
-  mylcd.Set_Text_colour(RED);
-  mylcd.Set_Text_Back_colour(BLACK);
+  mylcd.Set_Text_color(RED);
+  mylcd.Set_Text_Back_color(BLACK);
   mylcd.Set_Text_Size(1);
   mylcd.Print_String("Hello World!", 0, 0);
   mylcd.Print_Number_Float(01234.56789, 2, 0, 8, '.', 0, ' ');  
@@ -82,7 +82,7 @@ void loop()
   //mylcd.Print_String("DEADBEF", 0, 16);
 
   //display 2 times string
-  mylcd.Set_Text_colour(GREEN);
+  mylcd.Set_Text_color(GREEN);
   mylcd.Set_Text_Size(2);
   mylcd.Print_String("Hello World!", 0, 40);
   mylcd.Print_Number_Float(01234.56789, 2, 0, 56, '.', 0, ' ');  
@@ -90,7 +90,7 @@ void loop()
   //mylcd.Print_String("DEADBEEF", 0, 72);
 
   //display 3 times string
-  mylcd.Set_Text_colour(BLUE);
+  mylcd.Set_Text_color(BLUE);
   mylcd.Set_Text_Size(3);
   mylcd.Print_String("Hello World!", 0, 104);
   mylcd.Print_Number_Float(01234.56789, 2, 0, 128, '.', 0, ' ');  
@@ -98,17 +98,17 @@ void loop()
  // mylcd.Print_String("DEADBEEF", 0, 152);
 
   //display 4 times string
-  mylcd.Set_Text_colour(WHITE);
+  mylcd.Set_Text_color(WHITE);
   mylcd.Set_Text_Size(4);
   mylcd.Print_String("Hello!", 0, 192);
 
   //display 5 times string
-  mylcd.Set_Text_colour(YELLOW);
+  mylcd.Set_Text_color(YELLOW);
   mylcd.Set_Text_Size(5);
   mylcd.Print_String("Hello!", 0, 224);
 
   //display 6 times string
-  mylcd.Set_Text_colour(RED);
+  mylcd.Set_Text_color(RED);
   mylcd.Set_Text_Size(6);
   mylcd.Print_String("Hello!", 0, 266);
 
